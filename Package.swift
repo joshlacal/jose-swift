@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "JoseSwift",  // Update the package name to a valid Swift identifier
+    name: "jose-swift",
     platforms: [
         .iOS(.v14),
         .macOS(.v12),
@@ -14,7 +14,7 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "JoseSwift",  // Change to a valid product name without the hyphen
+            name: "JoseSwift",
             targets: [
                 "JSONWebKey",
                 "JSONWebAlgorithms",
@@ -22,18 +22,10 @@ let package = Package(
                 "JSONWebSignature",
                 "JSONWebToken"
             ]
-        ),
-        .library(
-            name: "JoseSwiftDocs",  // Change the docs library name to a valid identifier
-            targets: [
-                "JoseSwift"  // Refer to the renamed library in the docs target
-            ]
         )
     ],
     dependencies: [
-        // For `secp256k1` support
         .package(url: "https://github.com/GigaBitcoin/secp256k1.swift.git", .upToNextMinor(from: "0.15.0")),
-        // For `AES_CBC_HMAC_SHA2`, `PBES2` and RSA DER encoding support
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMinor(from: "1.8.1"))
     ],
     targets: [
@@ -43,22 +35,26 @@ let package = Package(
                 "JSONWebKey",
                 .product(name: "secp256k1", package: "secp256k1.swift"),
                 .product(name: "CryptoSwift", package: "CryptoSwift")
-            ]
+            ],
+            path: "Sources/JSONWebAlgorithms"
         ),
         .testTarget(
             name: "JWATests",
-            dependencies: ["JSONWebAlgorithms", "Tools"]
+            dependencies: ["JSONWebAlgorithms", "Tools"],
+            path: "Tests/JWATests"
         ),
         .target(
             name: "JSONWebSignature",
             dependencies: [
                 "JSONWebKey",
                 "JSONWebAlgorithms"
-            ]
+            ],
+            path: "Sources/JSONWebSignature"
         ),
         .testTarget(
             name: "JWSTests",
-            dependencies: ["JSONWebSignature", "Tools"]
+            dependencies: ["JSONWebSignature", "Tools"],
+            path: "Tests/JWSTests"
         ),
         .target(
             name: "JSONWebEncryption",
@@ -66,11 +62,13 @@ let package = Package(
                 "JSONWebAlgorithms",
                 "JSONWebKey",
                 "CryptoSwift"
-            ]
+            ],
+            path: "Sources/JSONWebEncryption"
         ),
         .testTarget(
             name: "JWETests",
-            dependencies: ["JSONWebEncryption", "Tools"]
+            dependencies: ["JSONWebEncryption", "Tools"],
+            path: "Tests/JWETests"
         ),
         .target(
             name: "JSONWebKey",
@@ -78,11 +76,13 @@ let package = Package(
                 "CryptoSwift",
                 "Tools",
                 .product(name: "secp256k1", package: "secp256k1.swift")
-            ]
+            ],
+            path: "Sources/JSONWebKey"
         ),
         .testTarget(
             name: "JWKTests",
-            dependencies: ["JSONWebKey", "Tools"]
+            dependencies: ["JSONWebKey", "Tools"],
+            path: "Tests/JWKTests"
         ),
         .target(
             name: "JSONWebToken",
@@ -91,25 +91,17 @@ let package = Package(
                 "JSONWebSignature",
                 "JSONWebEncryption",
                 "Tools"
-            ]
+            ],
+            path: "Sources/JSONWebToken"
         ),
         .testTarget(
             name: "JWTTests",
-            dependencies: ["JSONWebToken", "Tools"]
+            dependencies: ["JSONWebToken", "Tools"],
+            path: "Tests/JWTTests"
         ),
         .target(
-            name: "Tools"
-        ),
-        // This target exists just to build documentation, should not be used for development
-        .target(
-            name: "JoseSwift",  // Change to a valid target name without the hyphen
-            dependencies: [
-                "JSONWebKey",
-                "JSONWebSignature",
-                "JSONWebAlgorithms",
-                "JSONWebEncryption",
-                "JSONWebToken"
-            ]
+            name: "Tools",
+            path: "Sources/Tools"
         )
     ]
 )
