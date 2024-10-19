@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "jose-swift",
+    name: "JoseSwift",  // Update the package name to a valid Swift identifier
     platforms: [
         .iOS(.v14),
         .macOS(.v12),
@@ -14,7 +14,7 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "jose-swift",
+            name: "JoseSwift",  // Change to a valid product name without the hyphen
             targets: [
                 "JSONWebKey",
                 "JSONWebAlgorithms",
@@ -24,9 +24,9 @@ let package = Package(
             ]
         ),
         .library(
-            name: "jose-swift-docs",
+            name: "JoseSwiftDocs",  // Change the docs library name to a valid identifier
             targets: [
-                "jose-swift",
+                "JoseSwift"  // Refer to the renamed library in the docs target
             ]
         )
     ],
@@ -35,7 +35,6 @@ let package = Package(
         .package(url: "https://github.com/GigaBitcoin/secp256k1.swift.git", .upToNextMinor(from: "0.15.0")),
         // For `AES_CBC_HMAC_SHA2`, `PBES2` and RSA DER encoding support
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMinor(from: "1.8.1"))
-        // FOR `A256_CBC_HS512` with `ECDH-1PU-A256KW`
     ],
     targets: [
         .target(
@@ -78,7 +77,7 @@ let package = Package(
             dependencies: [
                 "CryptoSwift",
                 "Tools",
-                .product(name: "secp256k1", package: "secp256k1.swift"),
+                .product(name: "secp256k1", package: "secp256k1.swift")
             ]
         ),
         .testTarget(
@@ -101,9 +100,9 @@ let package = Package(
         .target(
             name: "Tools"
         ),
-        // This target exists just to build documentation it should not be used for development
+        // This target exists just to build documentation, should not be used for development
         .target(
-            name: "jose-swift",
+            name: "JoseSwift",  // Change to a valid target name without the hyphen
             dependencies: [
                 "JSONWebKey",
                 "JSONWebSignature",
@@ -111,6 +110,6 @@ let package = Package(
                 "JSONWebEncryption",
                 "JSONWebToken"
             ]
-        ),
+        )
     ]
 )
