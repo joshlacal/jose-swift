@@ -14,24 +14,14 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "JSONWebKey",
-            targets: ["JSONWebKey"]
-        ),
-        .library(
-            name: "JSONWebAlgorithms",
-            targets: ["JSONWebAlgorithms"]
-        ),
-        .library(
-            name: "JSONWebEncryption",
-            targets: ["JSONWebEncryption"]
-        ),
-        .library(
-            name: "JSONWebSignature",
-            targets: ["JSONWebSignature"]
-        ),
-        .library(
-            name: "JSONWebToken",
-            targets: ["JSONWebToken"]
+            name: "JoseSwift",
+            targets: [
+                "JSONWebKey",
+                "JSONWebAlgorithms",
+                "JSONWebEncryption",
+                "JSONWebSignature",
+                "JSONWebToken"
+            ]
         )
     ],
     dependencies: [
