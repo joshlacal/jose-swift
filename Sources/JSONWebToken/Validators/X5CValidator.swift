@@ -170,7 +170,7 @@ public struct X5CValidator<Policy: VerifierPolicy>: ClaimValidator, Sendable {
     ) throws -> VerificationResult? {
         nonisolated(unsafe) var result: VerificationResult?
         let semaphore = DispatchSemaphore(value: 0)
-        Task {
+        Task { @Sendable in
             result = try await verifyChain(trustedStore: trustedStore, certificates: certificates, policy: policy)
             semaphore.signal()
         }
